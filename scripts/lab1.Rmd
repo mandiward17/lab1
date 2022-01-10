@@ -9,6 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(rio)
 library(here)
+library(tidyverse)
 rstats <- import(here("data", "rstats_tweets.rds"))
+```
+
+```{r, data-exploring}
+# to create visuals and histos
 ```
 

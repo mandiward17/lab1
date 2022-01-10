@@ -7,6 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(rio)
+library(here)
+rstats <- import(here("data", "rstats_tweets.rds"))
 ```
 
 ## R Markdown

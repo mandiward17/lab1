@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(rio)
 library(here)
 library(tidyverse)
+library(tidytext)
 rstats <- import(here("data", "rstats_tweets.rds"))
 ```
 
@@ -35,5 +36,11 @@ ggplot(rstats, aes(x = display_text_width)) +
                  bins = 10)
 
 summary(rstats$display_text_width)
+```
+
+```{r}
+#Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (inidividual posts) in which "plot" is mentioned??
+plot <- grepl("plot|Plot", rstats$text)
+sum(plot)
 ```
 

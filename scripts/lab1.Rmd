@@ -39,8 +39,21 @@ summary(rstats$display_text_width)
 ```
 
 ```{r}
-#Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (inidividual posts) in which "plot" is mentioned??
+#Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (individual posts) in which "plot" is mentioned??
 plot <- grepl("plot|Plot", rstats$text)
 sum(plot)
+```
+
+```{r}
+tidy_text <- rstats %>% 
+  unnest_tokens(word, text)
+
+tidy_text %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+  geom_col(fill = "blue")
 ```
 

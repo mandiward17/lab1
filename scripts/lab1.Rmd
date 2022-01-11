@@ -9,6 +9,31 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(rio)
 library(here)
+library(tidyverse)
 rstats <- import(here("data", "rstats_tweets.rds"))
+```
+
+
+```{r}
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "blue",
+                 bins = 4)
+# Larger the number of bins, the better you are able to see the distribution of display_text_width data
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(color = "black",
+                 fill = "blue",
+                 bins = 50)
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(color = "black",
+                 fill = "blue",
+                 bins = 25)
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(color = "black",
+                 fill = "blue",
+                 bins = 10)
+
+summary(rstats$display_text_width)
 ```
 

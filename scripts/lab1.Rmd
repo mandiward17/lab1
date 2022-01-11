@@ -1,3 +1,4 @@
+
 ---
 title: "Lab1-collab"
 author: "Mandi Ward, Zach Farley, and Esme Castro"
@@ -14,26 +15,125 @@ library(tidytext)
 rstats <- import(here("data", "rstats_tweets.rds"))
 ```
 
+```{r, data-exploring}
+# Histograms
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 50) +           # 50 bins
+  theme_minimal()
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 250) +         # 250 bins
+  theme_minimal()
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 25) +         # 25 bins
+  theme_minimal()
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 15) +         # 15 bins
+  theme_minimal()
+
+## We think that the code wit 25 bins displays the data the best as we can see
+## what looks to start as a normal distribution but then tapers off at the end. This
+## visual shows the audience that there are not many tweets with text width greater than 150.
+
+# Density Plot
+ggplot(rstats, aes(display_text_width)) +
+  geom_density(fill = "#532555", 
+               bw = 25) +
+  theme_minimal() +
+  xlab("Text Width") +
+  ylab("Density")
+```
 
 ```{r}
+#Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (individual posts) in which "plot" is mentioned??
+plot <- grepl("plot|Plot", rstats$text)
+sum(plot)
+```
+
+```{r}
+tidy_text <- rstats %>% 
+  unnest_tokens(word, text)
+
+tidy_text %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+  geom_col(fill = "blue")
+```
+
+---
+title: "Lab1-collab"
+author: "Mandi Ward, Zach Farley, and Esme Castro"
+date: "1/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rio)
+library(here)
+library(tidyverse)
+library(tidytext)
+rstats <- import(here("data", "rstats_tweets.rds"))
+```
+
+```{r, data-exploring}
+# Histograms
 ggplot(rstats, aes(x = display_text_width)) +
-  geom_histogram(fill = "blue",
-                 bins = 4)
-# Larger the number of bins, the better you are able to see the distribution of display_text_width data
-ggplot(rstats, aes(x = display_text_width)) +
-  geom_histogram(color = "black",
-                 fill = "blue",
-                 bins = 50)
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 50) +           # 50 bins
+  theme_minimal()
 
 ggplot(rstats, aes(x = display_text_width)) +
-  geom_histogram(color = "black",
-                 fill = "blue",
-                 bins = 25)
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 250) +         # 250 bins
+  theme_minimal()
 
 ggplot(rstats, aes(x = display_text_width)) +
-  geom_histogram(color = "black",
-                 fill = "blue",
-                 bins = 10)
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 25) +         # 25 bins
+  theme_minimal()
+
+ggplot(rstats, aes(x = display_text_width)) +
+  geom_histogram(fill = "#036600",
+                 color = "black",
+                 alpha = 0.7,
+                 bins = 15) +         # 15 bins
+  theme_minimal()
+
+## We think that the code wit 25 bins displays the data the best as we can see
+## what looks to start as a normal distribution but then tapers off at the end. This
+## visual shows the audience that there are not many tweets with text width greater than 150.
+
+# Density Plot
+ggplot(rstats, aes(display_text_width)) +
+  geom_density(fill = "#532555", 
+               bw = 25) +
+  theme_minimal() +
+  xlab("Text Width") +
+  ylab("Density")
 
 summary(rstats$display_text_width)
 ```

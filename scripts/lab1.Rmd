@@ -107,7 +107,7 @@ tidy_text2 %>%
   slice(1:15) %>% 
   ggplot(aes(n, word)) +
   geom_col(fill = "blue", alpha = 0.5) +
-  theme_minimal() +
+  theme_minimal_grid() +
   labs(title = "Word frequencies in posts",
        subtitle = "Top 15 words displayed",
        x = "Count",

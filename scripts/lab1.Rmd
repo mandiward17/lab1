@@ -69,11 +69,36 @@ tidy_text <- rstats %>%
   unnest_tokens(word, text)
 
 tidy_text %>% 
+  count(word, sort = TRUE) #initial count of tidy_text dataset
+
+tidy_text %>% 
+  count(word, sort = TRUE) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  slice(1:15) %>%
+  ggplot(aes(n, word)) +
+    geom_col(fill = "cornflowerblue") #plot of top 15 most common words in tidy_text
+
+tidy_text %>% 
   anti_join(stop_words) %>% 
   count(word, sort = TRUE) %>% 
   mutate(word = fct_reorder(word, n)) %>% 
   slice(1:15) %>% 
   ggplot(aes(n, word)) +
-  geom_col(fill = "blue")
+  geom_col(fill = "blue") #plot of top 15 most common words in tidy_text, minus stop words
+
+tidy_text2 <- tidy_text %>% filter(!word %in% c("t.co", "https", "http", "rt", "rstats")) #removed rows where unnecessary words are not needed
+
+tidy_text2 %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+  geom_col(fill = "blue") #plot of top 15 words minus stop words and unnecessary words
 ```
+
+
+
+
+
 

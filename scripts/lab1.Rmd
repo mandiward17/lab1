@@ -8,9 +8,12 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(rio)
 library(here)
 library(tidyverse)
+library(ggplot2)
+library(cowplot)
 library(tidytext)
 rstats <- import(here("data", "rstats_tweets.rds"))
 ```

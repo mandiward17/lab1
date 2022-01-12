@@ -59,11 +59,11 @@ ggplot(rstats, aes(display_text_width)) +
 ```
 
 ```{r look-for-plot}
-#Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (individual posts) in which "plot" is mentioned??
+#Proportion of rows containing "plot|Plot"
 plot <- grepl("plot|Plot", rstats$text)
 sum(plot)
 ```
-Proportion of rows including the word "plot|Plot" = 29278/429513 = 0.068 (6%)
+Proportion of rows including the word "plot|Plot" = 29278/429513 = 0.068 (6.8%)
 
 ```{r}
 tidy_text <- rstats %>% 
@@ -98,6 +98,22 @@ tidy_text2 %>%
   geom_col(fill = "blue") #plot of top 15 words minus stop words and unnecessary words
 ```
 
+```{r stylized-plot}
+
+tidy_text2 %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+  geom_col(fill = "blue", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Word frequencies in posts",
+       subtitle = "Top 15 words displayed",
+       x = "Count",
+       y = "Word",
+       caption = "Data from Mike Kearny, distributed via #tidytuesday")
+```
 
 
 

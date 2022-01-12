@@ -58,11 +58,12 @@ ggplot(rstats, aes(display_text_width)) +
   ylab("Density")
 ```
 
-```{r}
+```{r look-for-plot}
 #Is the below counting the total number of time the word "plot" is mentioned or is it the number of rows (individual posts) in which "plot" is mentioned??
 plot <- grepl("plot|Plot", rstats$text)
 sum(plot)
 ```
+Proportion of rows including the word "plot|Plot" = 29278/429513 = 0.068 (6%)
 
 ```{r}
 tidy_text <- rstats %>% 
@@ -79,7 +80,7 @@ tidy_text %>%
     geom_col(fill = "cornflowerblue") #plot of top 15 most common words in tidy_text
 
 tidy_text %>% 
-  anti_join(stop_words) %>% 
+  anti_join(stop_words) %>%
   count(word, sort = TRUE) %>% 
   mutate(word = fct_reorder(word, n)) %>% 
   slice(1:15) %>% 
